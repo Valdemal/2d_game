@@ -4,23 +4,21 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "../Player/Player.h"
-#include "../Level/Level.h"
 #include "../Settings.h"
+#include "../UI/UI.hpp"
+#include "entityFactory.hpp"
+
+class Player;
 
 class Game {
-private:
-    bool running {true};
-    bool finished {false};
-    Player player;
-    Map &map;
-
-    static Game* instance;
-
-    static const std::string PLAYER_TEXTURE_FILE;
 public:
-    explicit Game(Map & map);
+    explicit Game(Map &map, Player &player);
 
-    static Game &getInstance() ;
+    static Game &getInstance();
+
+    const Map& getMap();
+
+    void addEntity(const entityPtr& entity);
 
     void processEvent(const sf::Event &event);
 
@@ -38,8 +36,21 @@ public:
 
     bool isFinished() const;
 private:
-    // Возвращает true, если key - цифрa
-    static bool isNum(const sf::Keyboard::Key &key);
+    Player &player;
+
+    Map &map;
+    UI ui;
+
+    std::vector<entityPtr> entities;
+
+    bool running {true};
+    bool finished {false};
+
+    static Game* instance;
+
+    void parseMap();
+
+    void resolveCollisionsBetweenEntities();
 };
 
 #endif //OOP_RGZ_GAME_H

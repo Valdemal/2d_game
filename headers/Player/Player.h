@@ -1,41 +1,24 @@
 #ifndef OOP_RGZ_PLAYER_H
 #define OOP_RGZ_PLAYER_H
 
-#include <SFML/Graphics.hpp>
-#include "../Level/Level.h"
-//#include "../Game/Game.h"
+#include "../Game/Game.h"
+#include "../Entity/Character.h"
+#include "../Bullet/Bullet.h"
 
-class Player {
-private:
-    sf::Sprite sprite;
-    sf::FloatRect rect;
-    float currentFrame{};
-    float dx{0}, dy{0};
-    bool onGround{};
-
-
-    constexpr static const double ACCELERATION = 10;
+class Player : public Character {
 public:
     Player() = default;
 
-    explicit Player(sf::Texture &image,
-                    sf::FloatRect textureRect,
-                    std::pair<float, float> position);
+    explicit Player(AnimationManager am, size_t maxHp, float x = 0, float y = 0);
 
-    void moveLeft();
+    void shoot() const;
 
-    void moveRight();
-
-    void update(float time, const Map &map);
-
-    void draw(sf::RenderWindow &window);
-
-    void jump();
-
-    void resolveCollisions(const Map &map, bool isHorizontalDirection);
+    std::string type() const {
+        return "Player";
+    }
 
 private:
-//    void resolveCollisions()
+    const size_t BULLET_DAMAGE = 20;
 };
 
 

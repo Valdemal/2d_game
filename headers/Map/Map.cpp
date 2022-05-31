@@ -1,9 +1,11 @@
-#include "Level.h"
+#include "Map.h"
 
 Map Map::readFromTextFile(const std::string &filename) {
     static std::map<char, mapObject> conformity = {
             {' ', mapObject::Empty},
             {'B', mapObject::Border},
+            {'H', mapObject::HealthBooster},
+            {'C', mapObject::Clone}
     };
 
     auto size = getSizeOfFile(filename);
@@ -16,9 +18,7 @@ Map Map::readFromTextFile(const std::string &filename) {
             std::getline(file, s);
             for (size_t j = 0; j < s.size(); ++j) {
                 result[i][j] = conformity[s[j]];
-//                std::cout << s[j];
             }
-//            std::cout << std::endl;
         }
         file.close();
     } else
@@ -28,19 +28,22 @@ Map Map::readFromTextFile(const std::string &filename) {
 }
 
 void Map::draw(sf::RenderWindow &window) const {
-    sf::RectangleShape rectangle(sf::Vector2f(SETTINGS.TILE_SIZE, SETTINGS.TILE_SIZE));
+    sf::RectangleShape rectangle(sf::Vector2f(settings::TILE_SIZE, settings::TILE_SIZE));
     for (int i = 0; i < this->rows(); i++ ) {
         for (int j = 0; j < this->cols(); j++) {
-            switch ((*this)[i][j]) {
-                case mapObject::Empty:
-                    continue;
-
-                case mapObject::Border:
-                    rectangle.setFillColor(sf::Color::Black);
-                    break;
+//            switch ((*this)[i][j]) {
+//                case mapObject::Empty:
+//                    continue;
+//
+//                case mapObject::Border:
+//                    rectangle.setFillColor(sf::Color::Black);
+//                    break;
+//            }
+            if ((*this)[i][j] == mapObject::Border){
+                rectangle.setFillColor(sf::Color::Black);
+                rectangle.setPosition(j * settings::TILE_SIZE, i * settings::TILE_SIZE);
+                window.draw(rectangle);
             }
-            rectangle.setPosition(j * SETTINGS.TILE_SIZE, i * SETTINGS.TILE_SIZE);
-            window.draw(rectangle);
         }
     }
 }

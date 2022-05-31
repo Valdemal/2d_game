@@ -1,5 +1,5 @@
-#ifndef OOP_RGZ_LEVEL_H
-#define OOP_RGZ_LEVEL_H
+#ifndef OOP_RGZ_MAP_H
+#define OOP_RGZ_MAP_H
 
 #include <fstream>
 #include <map>
@@ -8,7 +8,7 @@
 #include "../Settings.h"
 
 enum class mapObject {
-    Empty, Border
+    Empty, Border, HealthBooster, Clone
 };
 
 class Map : public matrix::Matrix<mapObject> {
@@ -24,17 +24,6 @@ public:
 private:
     static std::pair<size_t, size_t> getSizeOfFile(const std::string& filename);
 };
-//
-//class Level {
-//private:
-//    Map map;
-//public:
-//    explicit Level(const std::string &mapFileName) {
-//        map = Map::readFromTextFile(mapFileName);
-//    }
-//
-//    Map &getMap() { return map; }
-//};
 
 
-#endif //OOP_RGZ_LEVEL_H
+#endif //OOP_RGZ_MAP_H
