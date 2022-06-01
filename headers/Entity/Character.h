@@ -4,7 +4,6 @@
 #include <utility>
 #include "Entity.h"
 #include "../Map/Map.h"
-//#include "../Game/Game.h"
 
 class Character : public Entity {
 public:

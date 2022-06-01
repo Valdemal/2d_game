@@ -1,7 +1,6 @@
 #ifndef OOP_RGZ_PLAYER_H
 #define OOP_RGZ_PLAYER_H
 
-#include "../Game/Game.h"
 #include "../Entity/Character.h"
 #include "../Bullet/Bullet.h"
 

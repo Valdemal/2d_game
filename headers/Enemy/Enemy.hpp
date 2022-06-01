@@ -10,7 +10,9 @@ public:
 
     std::string type() const {
         return "Enemy";
-    }//    virtual void attack(Player& player) = 0;
+    }
+
+    virtual void attack(Player& player) = 0;
 };
 
 

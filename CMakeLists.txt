@@ -7,17 +7,16 @@ set(SOURCES
         headers/Enemy/Clone.hpp
         headers/Animation/Animation.cpp headers/Animation/Animation.h
         headers/Animation/AnimationManager.cpp headers/Animation/AnimationManager.h
-        headers/Game/Game.h headers/Game/Game.cpp
         headers/Player/Player.cpp headers/Player/Player.h
         headers/Map/Map.cpp headers/Map/Map.h
         headers/Entity/Entity.cpp headers/Entity/Entity.h
         headers/UI/Message.cpp headers/UI/Message.h headers/UI/UI.hpp
-        headers/Game/entityFactory.hpp
+        headers/Level/entityFactory.hpp
         headers/Entity/Character.cpp headers/Entity/Character.h
         headers/Modifier/Modifier.hpp
         headers/Modifier/HealthBooster.hpp
         headers/Enemy/Enemy.hpp
-        headers/Bullet/Bullet.cpp headers/Bullet/Bullet.h)
+        headers/Bullet/Bullet.cpp headers/Bullet/Bullet.h headers/Controller/Controller.cpp headers/Controller/Controller.h headers/Level/Level.cpp headers/Level/Level.h)
 
 add_executable(OOP_RGZ main.cpp ${SOURCES})
 

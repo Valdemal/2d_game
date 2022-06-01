@@ -1,4 +1,4 @@
-#include "headers/Game/Game.h"
+#include "headers/Controller/Controller.h"
 
 int main() {
     sf::RenderWindow window(
@@ -6,13 +6,8 @@ int main() {
             settings::game::name
     );
 
-    auto map = Map::readFromTextFile("../files/map.txt");
+    Controller controller;
 
-    Player player(settings::PLAYER_AM, 100,
-                  float (settings::game::window::WIDTH) / 2 - 60,
-                  float (settings::game::window::HEIGHT) / 2);
-
-    Game game (map, player);
     sf::Clock clock;
     while (window.isOpen()) {
         float time = float(clock.getElapsedTime().asMicroseconds()) / 800;
@@ -23,13 +18,12 @@ int main() {
             if (event.type == sf::Event::Closed)
                 window.close();
             else
-                game.processEvent(event);
+                controller.processEvent(event);
         }
 
-        game.update(time);
-
+        controller.update(time);
         window.clear(sf::Color::Green);
-        game.draw(window);
+        controller.draw(window);
         window.display();
     }
 

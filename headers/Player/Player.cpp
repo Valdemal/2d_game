@@ -6,7 +6,7 @@ Player::Player(AnimationManager am, size_t maxHp, float x, float y) : Character(
 }
 
 void Player::shoot() const {
-        auto game = Game::getInstance();
-        auto bullet = new Bullet(getX(), getY() - height() / 2, BULLET_DAMAGE, !xDirection);
-        game.addEntity(entityPtr(bullet));
+//        auto game = Game::getInstance();
+//        auto bullet = new Bullet(getX(), getY() - height() / 2, BULLET_DAMAGE, !xDirection);
+//        game.addEntity(entityPtr(bullet));
 }

@@ -2,7 +2,6 @@
 #define ENEMY_CLONE
 
 #include "Enemy.hpp"
-//#include "../Player/Player.h"
 
 class Clone : public Enemy {
 private:
@@ -14,10 +13,10 @@ public:
         am.set("stay");
         xDirection = LEFT;
     }
-//
-//    void attack(Player &player) override {
-//        player.damage(DAMAGE);
-//    }
+
+    void attack(Player &player) override {
+        player.damage(DAMAGE);
+    }
 };
 
 #endif
