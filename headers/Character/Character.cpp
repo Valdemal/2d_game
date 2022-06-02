@@ -51,48 +51,50 @@ void Character::setAnimationByState() {
             am.set("jump");
             break;
     }
-}
-
-void Character::update(float time) {
-    setAnimationByState();
-
-    setX(getX() + getDx() * time);
-
-    auto map = Level::getInstance().getMap();
-    resolveCollisions(map, true);
 
     if (dirChanged)
         am.flip();
 
+    dirChanged = false;
+}
+
+void Character::update(float time) {
+    setAnimationByState();
+    setX(getX() + getDx() * time);
+
+    auto map = Level::getInstance().getMap();
+
+    resolveCollisions(map, true);
     if (not onGround()) {
         increaseDy(0.0005f * time);
     }
-
+    setY(getY() + getDy() * time);
     setOnGround(false);
     resolveCollisions(map, false);
-    setY(getY() + getDy() * time);
-
-    am.tick(time);
 
     setDx(0);
-    dirChanged = false;
+    am.tick(time);
 }
 
 
 void Character::resolveCollisions(const Map &map, bool isHorizontalDirection) {
-    for (size_t i = size_t(getY()) / settings::TILE_SIZE; i < size_t(getY() + height()) / settings::TILE_SIZE; i++)
-        for (size_t j = size_t(getX()) / settings::TILE_SIZE; j < size_t(getX() + width()) / settings::TILE_SIZE; j++) {
+    for (size_t i = std::abs(getY() / float(settings::TILE_SIZE)); i < std::abs((getY() + height()) / float(settings::TILE_SIZE)); i++)
+        // Происходит телепорт при долгом беге в левую стену
+        for (size_t j = std::abs(getX() / float(settings::TILE_SIZE)); j < std::abs((getX() + width()) / float(settings::TILE_SIZE)); j++) {
 
             // Обработка столкновения с границей
             if (map[i][j] == mapObject::Border) {
                 if (isHorizontalDirection) {
-                    if (getDx() > 0)
+
+                    if (getDx() > 0) {
                         setX(float(j) * settings::TILE_SIZE - width());
-                    else if (getDx() < 0)
+
+                    } else if (getDx() < 0)
                         setX(float(j) * settings::TILE_SIZE + settings::TILE_SIZE);
+
                 } else {
+
                     if (getDy() > 0) {
-                        std::cout << "Collision" << std::endl;
                         setY(float(i) * settings::TILE_SIZE - height());
                         setDy(0);
                         setOnGround(true);
@@ -100,6 +102,7 @@ void Character::resolveCollisions(const Map &map, bool isHorizontalDirection) {
                         setY(float(i) * settings::TILE_SIZE + settings::TILE_SIZE);
                         setDy(0);
                     }
+
                 }
             }
         }
