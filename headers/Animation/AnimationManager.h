@@ -1,7 +1,3 @@
-//
-// Created by Vovan on 24.05.2022.
-//
-
 #ifndef OOP_RGZ_ANIMATIONMANAGER_H
 #define OOP_RGZ_ANIMATIONMANAGER_H
 
@@ -36,7 +32,5 @@ public:
 
     void play();
 };
-
-
 
 #endif //OOP_RGZ_ANIMATIONMANAGER_H

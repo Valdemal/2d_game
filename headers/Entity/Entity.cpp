@@ -42,5 +42,35 @@ void Entity::draw(sf::RenderWindow &window) {
 }
 
 bool Entity::intersects(const Entity &other) const {
-    return am.getRect().intersects(other.am.getRect());
+    // Починить
+//    return am.getRect().intersects(other.am.getRect());
+    return false;
+}
+
+bool Entity::isAlive() const {
+    return alive;
+}
+
+float Entity::getDx() const {
+    return dx;
+}
+
+float Entity::getDy() const {
+    return dy;
+}
+
+void Entity::increaseDx(float value) {
+    dx += value;
+}
+
+void Entity::increaseDy(float value) {
+    dy += value;
+}
+
+void Entity::setDx(float acceleration) {
+    this->dx = acceleration;
+}
+
+void Entity::setDy(float acceleration) {
+    this->dy = acceleration;
 }

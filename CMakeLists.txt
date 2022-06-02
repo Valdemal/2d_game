@@ -12,7 +12,7 @@ set(SOURCES
         headers/Entity/Entity.cpp headers/Entity/Entity.h
         headers/UI/Message.cpp headers/UI/Message.h headers/UI/UI.hpp
         headers/Level/entityFactory.hpp
-        headers/Entity/Character.cpp headers/Entity/Character.h
+        headers/Character/Character.cpp headers/Character/Character.h
         headers/Modifier/Modifier.hpp
         headers/Modifier/HealthBooster.hpp
         headers/Enemy/Enemy.hpp

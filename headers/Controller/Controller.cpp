@@ -24,7 +24,7 @@ void Controller::processEvent(const sf::Event &event) {
             start();
             ui.getMessage("pause").deactivate();
 
-            TemporaryMessage tm("Start", 45, 2,   float (settings::game::window::WIDTH) / 2, 50);
+            TemporaryMessage tm("Start", 45, 2, float(settings::game::window::WIDTH) / 2, 50);
             tm.setColor(sf::Color::Red);
             ui.show(tm);
         }
@@ -71,10 +71,9 @@ void Controller::update(float time) {
 Controller::Controller() {
     auto map = Map::readFromTextFile("../files/map.txt");
 
-
-    Player player(settings::PLAYER_AM, 100,
-                  float(settings::game::window::WIDTH) / 2 - 60,
-                  float(settings::game::window::HEIGHT) / 2);
+    auto player = std::make_shared<Player>(settings::PLAYER_AM, 100,
+                                           float(settings::game::window::WIDTH) / 2 - 60,
+                                           float(settings::game::window::HEIGHT) / 2);
 
     level = std::make_unique<Level>(player, map);
 

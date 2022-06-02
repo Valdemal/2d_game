@@ -21,6 +21,8 @@ public:
 
     void draw (sf::RenderWindow& window) const;
 
+    static bool isEntity(mapObject object);
+
 private:
     static std::pair<size_t, size_t> getSizeOfFile(const std::string& filename);
 };

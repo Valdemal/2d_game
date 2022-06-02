@@ -10,10 +10,10 @@ public:
     HealthBooster(float x, float y) {
         setPos(x, y);
         am = createHealthBoosterAnim();
-//        am.set("stand");
+        am.set("stand");
     }
 
-    void useOn(Character& player) override {
+    void useOn(Player& player) override {
         player.heal(HEALTH_BOOST_VALUE);
         setAlive(false);
     }

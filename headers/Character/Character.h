@@ -2,8 +2,9 @@
 #define OOP_RGZ_CHARACTER_H
 
 #include <utility>
-#include "Entity.h"
-#include "../Map/Map.h"
+#include "../Entity/Entity.h"
+
+class Map;
 
 class Character : public Entity {
 public:
@@ -13,7 +14,7 @@ public:
 
     size_t getHp() const;
 
-    void setHp(size_t value);;
+    void setHp(size_t value);
 
     void damage(size_t damage);
 

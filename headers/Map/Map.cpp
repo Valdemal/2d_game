@@ -65,3 +65,7 @@ std::pair<size_t, size_t> Map::getSizeOfFile(const std::string &filename) {
 
     return std::make_pair(m, n);
 }
+
+bool Map::isEntity(mapObject object) {
+    return object == mapObject::HealthBooster or object == mapObject::Clone;
+}

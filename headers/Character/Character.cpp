@@ -1,4 +1,6 @@
 #include "Character.h"
+#include "../Map/Map.h"
+#include "../Level/Level.h"
 
 void Character::moveLeft() {
     if (xDirection == RIGHT)
@@ -28,6 +30,7 @@ void Character::jump() {
     if (onGround() and (state == STAY or state == WALK)) {
         setDy(-0.27);
         state = JUMP;
+        setOnGround(false);
     }
 }
 
@@ -55,47 +58,46 @@ void Character::update(float time) {
 
     setX(getX() + getDx() * time);
 
-//    auto map = Game::getInstance().getMap();
-//    resolveCollisions(map, true);
+    auto map = Level::getInstance().getMap();
+    resolveCollisions(map, true);
 
     if (dirChanged)
         am.flip();
 
-//    if (not onGround()) {
-//        increaseDy(0.0005f * time);
-//    }
-    setY(getY() + getDy() * time);
+    if (not onGround()) {
+        increaseDy(0.0005f * time);
+    }
 
-//    resolveCollisions(map, false);
+    setOnGround(false);
+    resolveCollisions(map, false);
+    setY(getY() + getDy() * time);
 
     am.tick(time);
 
     setDx(0);
     dirChanged = false;
-
-//    isOnGround = false;
 }
 
 
 void Character::resolveCollisions(const Map &map, bool isHorizontalDirection) {
-    for (size_t i = getY() / settings::TILE_SIZE; i < getY() + height() / settings::TILE_SIZE; i++)
-        for (size_t j = getX() / settings::TILE_SIZE; j < getX() + width() / settings::TILE_SIZE; j++) {
+    for (size_t i = size_t(getY()) / settings::TILE_SIZE; i < size_t(getY() + height()) / settings::TILE_SIZE; i++)
+        for (size_t j = size_t(getX()) / settings::TILE_SIZE; j < size_t(getX() + width()) / settings::TILE_SIZE; j++) {
 
             // Обработка столкновения с границей
             if (map[i][j] == mapObject::Border) {
                 if (isHorizontalDirection) {
                     if (getDx() > 0)
-                        setX(j * settings::TILE_SIZE - width());
+                        setX(float(j) * settings::TILE_SIZE - width());
                     else if (getDx() < 0)
-                        setX(j * settings::TILE_SIZE + settings::TILE_SIZE);
+                        setX(float(j) * settings::TILE_SIZE + settings::TILE_SIZE);
                 } else {
                     if (getDy() > 0) {
                         std::cout << "Collision" << std::endl;
-                        setY(i * settings::TILE_SIZE - height());
+                        setY(float(i) * settings::TILE_SIZE - height());
                         setDy(0);
                         setOnGround(true);
                     } else if (getDy() < 0) {
-                        setY(i * settings::TILE_SIZE + settings::TILE_SIZE);
+                        setY(float(i) * settings::TILE_SIZE + settings::TILE_SIZE);
                         setDy(0);
                     }
                 }

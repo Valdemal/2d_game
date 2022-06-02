@@ -18,6 +18,10 @@ public:
 
     explicit Entity(AnimationManager &am, float x = 0, float y = 0) : am(am), x(x), y(y) {};
 
+    virtual void update(float time) = 0;
+
+    virtual std::string type() const = 0;
+
     bool intersects(const Entity& other) const;
 
     void setPos(float x, float y);
@@ -28,33 +32,19 @@ public:
 
     void setAlive(bool isAlive);
 
-    bool isAlive() const {
-        return alive;
-    }
+    bool isAlive() const;
 
-    float getDx() const {
-        return dx;
-    }
+    float getDx() const;
 
-    float getDy() const {
-        return dy;
-    }
+    float getDy() const;
 
-    void increaseDx(float value) {
-        dx += value;
-    }
+    void increaseDx(float value);
 
-    void increaseDy(float value) {
-        dy += value;
-    }
+    void increaseDy(float value);
 
-    void setDx(float acceleration) {
-        this->dx = acceleration;
-    }
+    void setDx(float acceleration);
 
-    void setDy(float acceleration){
-        this->dy = acceleration;
-    }
+    void setDy(float acceleration);
 
     float getX() const;
 
@@ -65,10 +55,6 @@ public:
     float height() const;
 
     virtual void draw(sf::RenderWindow& window);
-
-    virtual void update(float time) = 0;
-
-    virtual std::string type() const = 0;
 };
 
 

@@ -11,6 +11,9 @@ void AnimationManager::draw(sf::RenderWindow &window, float x, float y) {
 }
 
 void AnimationManager::set(const std::string &name) {
+    if (not animations.count(name))
+        throw std::runtime_error("Animation manager has no " + name + " animation!");
+
     currentAnimationName = name;
 }
 
