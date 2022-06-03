@@ -63,7 +63,7 @@ void Controller::update(float time) {
 
         if (!level->getPlayer().isAlive()) {
             finish();
-            std::cout << "Game over!";
+            ui.getMessage("game over").activate();
         }
     }
 }
@@ -81,6 +81,10 @@ Controller::Controller() {
     Message pauseMessage("Pause", 45, float(settings::game::window::WIDTH) / 2, 50);
     pauseMessage.setColor(sf::Color::Red);
     ui.add("pause", pauseMessage);
+
+    Message gameOverMessage ("Game over!!!", 45, float(settings::game::window::WIDTH) / 2, 50, false);
+    gameOverMessage.setColor(sf::Color::Red);
+    ui.add("game over", gameOverMessage);
 
     TemporaryMessage tm("Start", 45, 2, float(settings::game::window::WIDTH) / 2, 50);
     tm.setColor(sf::Color::Red);

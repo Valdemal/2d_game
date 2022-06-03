@@ -10,9 +10,11 @@ class Character : public Entity {
 public:
     Character() = default;
 
-    Character(AnimationManager &am, size_t maxHp, float x = 0, float y = 0);
+    Character(const AnimationManager &am, size_t maxHp, float x = 0, float y = 0);
 
     size_t getHp() const;
+
+    size_t getMaxHp() const;
 
     void setHp(size_t value);
 

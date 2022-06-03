@@ -1,7 +1,7 @@
 #include "Level.h"
 #include "../Bullet/Bullet.h"
 
-Level* Level::instance = nullptr;
+Level *Level::instance = nullptr;
 
 void Level::update(float time) {
     player->update(time);
@@ -11,7 +11,6 @@ void Level::update(float time) {
 
     resolveCollisionsBetweenEntities();
 }
-
 
 void Level::parseMap() {
     for (size_t i = 0; i < map.rows(); ++i) {
@@ -46,13 +45,10 @@ void Level::resolveCollisionsForEntity(Entity &entity) {
             }
 
     } else if (entity.type() == "Enemy" and entity.intersects(*player)) {
-        auto enemy = dynamic_cast<Enemy*>(&entity);
-//        std::cout << "Enemy should attack player" << std::endl;
-        // Тут логика атаки, которая пока не работает по странным причинам
-
+        auto enemy = dynamic_cast<Enemy *>(&entity);
+        enemy->attack(*player);
     } else if (entity.type() == "Modifier" and entity.intersects(*player)) {
-        std::cout << "Modify";
-        auto modifier = dynamic_cast<Modifier*>(&entity);
+        auto modifier = dynamic_cast<Modifier *>(&entity);
         modifier->useOn(*player);
     }
 }
@@ -75,7 +71,7 @@ void Level::draw(sf::RenderWindow &window) {
 }
 
 Level::Level(std::shared_ptr<Player> player, const Map &map) : player(std::move(player)), map(map) {
-    if (instance == nullptr){
+    if (instance == nullptr) {
         parseMap();
         instance = this;
     } else

@@ -38,8 +38,10 @@ void Entity::draw(sf::RenderWindow &window) {
 }
 
 bool Entity::intersects(const Entity &other) const {
-    // Починить
-    return am.getRect().intersects(other.am.getRect());
+    compareRectStruct a {getX(), getY(), getX() + width(), getY() + height()};
+    compareRectStruct b {other.getX(), other.getY(), other.getX() + other.width(), other.getY() + other.height()};
+
+    return checkIntersection(a, b);
 }
 
 bool Entity::isAlive() const {
@@ -70,4 +72,36 @@ void Entity::setDy(float acceleration) {
     this->dy = acceleration;
 }
 
-Entity::Entity(AnimationManager &am, float x, float y) : am(am), x(x), y(y) {}
+Entity::Entity(const AnimationManager &am, float x, float y) : am(am), x(x), y(y) {}
+
+bool Entity::checkIntersection(Entity::compareRectStruct a, Entity::compareRectStruct b) {
+    return (
+                   (
+                           (
+                                   (a.x >= b.x && a.x <= b.x1) || (a.x1 >= b.x && a.x1 <= b.x1)
+                           ) && (
+                                   (a.y >= b.y && a.y <= b.y1) || (a.y1 >= b.y && a.y1 <= b.y1)
+                           )
+                   ) || (
+                           (
+                                   (b.x >= a.x && b.x <= a.x1) || (b.x1 >= a.x && b.x1 <= a.x1)
+                           ) && (
+                                   (b.y >= a.y && b.y <= a.y1) || (b.y1 >= a.y && b.y1 <= a.y1)
+                           )
+                   )
+           ) || (
+                   (
+                           (
+                                   (a.x >= b.x && a.x <= b.x1) || (a.x1 >= b.x && a.x1 <= b.x1)
+                           ) && (
+                                   (b.y >= a.y && b.y <= a.y1) || (b.y1 >= a.y && b.y1 <= a.y1)
+                           )
+                   ) || (
+                           (
+                                   (b.x >= a.x && b.x <= a.x1) || (b.x1 >= a.x && b.x1 <= a.x1)
+                           ) && (
+                                   (a.y >= b.y && a.y <= b.y1) || (a.y1 >= b.y && a.y1 <= b.y1)
+                           )
+                   )
+           );
+}

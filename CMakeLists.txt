@@ -10,13 +10,13 @@ set(SOURCES
         headers/Player/Player.cpp headers/Player/Player.h
         headers/Map/Map.cpp headers/Map/Map.h
         headers/Entity/Entity.cpp headers/Entity/Entity.h
-        headers/UI/Message.cpp headers/UI/Message.h headers/UI/UI.hpp
+        headers/UI/Message.cpp headers/UI/Message.h headers/UI/UI.h
         headers/Level/entityFactory.hpp
         headers/Character/Character.cpp headers/Character/Character.h
         headers/Modifier/Modifier.hpp
         headers/Modifier/HealthBooster.hpp
         headers/Enemy/Enemy.hpp
-        headers/Bullet/Bullet.cpp headers/Bullet/Bullet.h headers/Controller/Controller.cpp headers/Controller/Controller.h headers/Level/Level.cpp headers/Level/Level.h)
+        headers/Bullet/Bullet.cpp headers/Bullet/Bullet.h headers/Controller/Controller.cpp headers/Controller/Controller.h headers/Level/Level.cpp headers/Level/Level.h headers/UI/UI.cpp)
 
 add_executable(OOP_RGZ main.cpp ${SOURCES})
 

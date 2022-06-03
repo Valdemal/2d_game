@@ -21,8 +21,6 @@ public:
 
     float height () const;
 
-    const sf::IntRect& getRect() const;
-
     void pause();
 
     void play();

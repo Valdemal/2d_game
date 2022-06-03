@@ -105,7 +105,7 @@ void Character::resolveCollisions(const Map &map, bool isHorizontalDirection) {
         }
 }
 
-Character::Character(AnimationManager &am, size_t maxHp, float x, float y) : Entity(am, x, y), maxHp(maxHp), hp(maxHp) {
+Character::Character(const AnimationManager &am, size_t maxHp, float x, float y) : Entity(am, x, y), maxHp(maxHp), hp(maxHp) {
     state = STAY;
     xDirection = RIGHT;
 }
@@ -147,6 +147,10 @@ void Character::setOnGround(bool onGround) {
 
 bool Character::onGround() const {
     return isOnGround;
+}
+
+size_t Character::getMaxHp() const {
+    return maxHp;
 }
 
 

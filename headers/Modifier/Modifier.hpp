@@ -10,7 +10,7 @@ public:
 
     virtual void useOn(Player& player) = 0;
 
-    virtual void update(float time) override{
+    void update(float time) override{
         am.tick(time);
     }
 

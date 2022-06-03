@@ -2,7 +2,7 @@
 #include "../Bullet/Bullet.h"
 #include "../Level/Level.h"
 
-Player::Player(AnimationManager am, size_t maxHp, float x, float y) : Character(am, maxHp, x, y) {
+Player::Player(const AnimationManager &am, size_t maxHp, float x, float y) : Character(am, maxHp, x, y) {
 
 }
 

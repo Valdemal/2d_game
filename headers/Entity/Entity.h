@@ -14,15 +14,15 @@ private:
     float x{}, y{};
     bool alive{true};
 public:
-    Entity()=default;
+    Entity() = default;
 
-    explicit Entity(AnimationManager &am, float x = 0, float y = 0);;
+    explicit Entity(const AnimationManager &am, float x = 0, float y = 0);
 
     virtual void update(float time) = 0;
 
     virtual std::string type() const = 0;
 
-    bool intersects(const Entity& other) const;
+    bool intersects(const Entity &other) const;
 
     void setPos(float x, float y);
 
@@ -50,11 +50,20 @@ public:
 
     float getY() const;
 
-    float width () const;
+    float width() const;
 
     float height() const;
 
-    virtual void draw(sf::RenderWindow& window);
+    virtual void draw(sf::RenderWindow &window);
+
+private:
+    struct compareRectStruct {
+        float x, y;
+        float x1, y1;
+    };
+
+
+    static bool checkIntersection(compareRectStruct a, compareRectStruct b);
 };
 
 

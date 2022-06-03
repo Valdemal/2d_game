@@ -42,6 +42,3 @@ float AnimationManager::height() const {
     return animations.at(currentAnimationName).height();
 }
 
-const sf::IntRect &AnimationManager::getRect() const {
-    return animations.at(currentAnimationName).getRect();
-}

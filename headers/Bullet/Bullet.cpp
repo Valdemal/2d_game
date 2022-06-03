@@ -1,5 +1,6 @@
 #include "Bullet.h"
 #include "../Settings.h"
+#include "../Level/Level.h"
 
 Bullet::Bullet(float x, float y, size_t damage, bool isRightDirection) : damage(damage) {
     setPos(x, y);
@@ -16,19 +17,19 @@ void Bullet::damageTo(Character &character) {
 void Bullet::update(float time) {
     setX(getX() + getDx() * time);
 
-    if (true) {
-//        auto map = Game::getInstance().getMap();
-//
-//        for (size_t i = size_t(getY()) / settings::TILE_SIZE; i < (getY() + height()) / settings::TILE_SIZE; ++i)
-//            for (size_t j = size_t(getX()) / settings::TILE_SIZE;
-//                 j < (getX() + width()) / settings::TILE_SIZE; ++j) {
-//                if (map[i][j] == mapObject::Border) {
-//                    setDx(0);
-//                    setAlive(false);
-//                    am.set("explode");
-//                }
-//            }
-    }
+    auto map = Level::getInstance().getMap();
+
+    for (size_t i = std::abs(getY() / float(settings::TILE_SIZE));
+         i < std::abs((getY() + height()) / float(settings::TILE_SIZE)); i++)
+        for (size_t j = std::abs(getX() / float(settings::TILE_SIZE));
+             j < std::abs((getX() + width()) / float(settings::TILE_SIZE)); j++) {
+            if (map[i][j] == mapObject::Border) {
+                setDx(0);
+                setAlive(false);
+                am.set("explode");
+            }
+        }
+
     am.tick(time);
 }
 

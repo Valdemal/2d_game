@@ -1,7 +1,7 @@
 #ifndef OOP_RGZ_CONTROLLER_H
 #define OOP_RGZ_CONTROLLER_H
 
-#include "../UI/UI.hpp"
+#include "../UI/UI.h"
 #include "../Settings.h"
 #include "../Level/Level.h"
 

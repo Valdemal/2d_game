@@ -50,9 +50,3 @@ float Animation::height() const {
     return frames[int(currentFrame)].height;
 }
 
-const sf::IntRect &Animation::getRect() const {
-    if (isFlipped)
-        return flippedFrames.at(int(currentFrame));
-    else
-        return frames.at(int(currentFrame));
-}
