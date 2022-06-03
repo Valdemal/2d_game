@@ -16,7 +16,7 @@ private:
 public:
     Entity()=default;
 
-    explicit Entity(AnimationManager &am, float x = 0, float y = 0) : am(am), x(x), y(y) {};
+    explicit Entity(AnimationManager &am, float x = 0, float y = 0);;
 
     virtual void update(float time) = 0;
 

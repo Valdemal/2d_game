@@ -23,7 +23,7 @@ private:
         sf::Texture t;
         // Заменить
         t.loadFromFile("../files/1.png");
-        am.create("stand", Animation(t, sf::IntRect(10, 10, 30, 30), 1, 0,0));
+        am.add("stand", Animation(t, sf::IntRect(10, 10, 30, 30), 1, 0, 0));
         return am;
     }
 };

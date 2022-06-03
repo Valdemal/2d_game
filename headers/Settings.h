@@ -27,13 +27,13 @@ namespace settings {
 
     const AnimationManager PLAYER_AM = [](){
         AnimationManager am;
-        am.create("walk",
-                  Animation(settings::PLAYER_TEXTURE,
-                            sf::IntRect(0, 244, 40, 50),
-                            6, 0.005, 40));
+        am.add("walk",
+               Animation(settings::PLAYER_TEXTURE,
+                         sf::IntRect(0, 244, 40, 50),
+                         6, 0.005, 40));
 
-        am.create("jump", Animation(settings::PLAYER_TEXTURE, sf::IntRect(0, 528, 29, 30), 4, 0.0045, 40));
-        am.create("stay", Animation(settings::PLAYER_TEXTURE, sf::IntRect(0, 187, 42, 52), 3, 0.002, 40));
+        am.add("jump", Animation(settings::PLAYER_TEXTURE, sf::IntRect(0, 528, 29, 30), 4, 0.0045, 40));
+        am.add("stay", Animation(settings::PLAYER_TEXTURE, sf::IntRect(0, 187, 42, 52), 3, 0.002, 40));
         return am;
     }();
 }

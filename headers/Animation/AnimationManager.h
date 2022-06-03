@@ -4,13 +4,10 @@
 #include "Animation.h"
 
 class AnimationManager {
-private:
-    std::string currentAnimationName;
-    std::map<std::string, Animation> animations;
 public:
     AnimationManager()= default;
 
-    void create(const std::string& name, Animation animation);
+    void add(const std::string& name, Animation animation);
 
     void draw(sf::RenderWindow &window, float x = 0, float y = 0);
 
@@ -24,13 +21,14 @@ public:
 
     float height () const;
 
-    const sf::IntRect& getRect() const {
-        return animations.at(currentAnimationName).getRect();
-    }
+    const sf::IntRect& getRect() const;
 
     void pause();
 
     void play();
+private:
+    std::string currentAnimationName;
+    std::map<std::string, Animation> animations;
 };
 
 #endif //OOP_RGZ_ANIMATIONMANAGER_H

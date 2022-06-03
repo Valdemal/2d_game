@@ -29,6 +29,8 @@ private:
 
     void parseMap();
     void resolveCollisionsBetweenEntities();
+
+    void resolveCollisionsForEntity(Entity &entity);
 };
 
 

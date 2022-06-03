@@ -6,12 +6,6 @@
 #include <memory>
 
 class Animation {
-private:
-    std::vector<sf::IntRect> frames, flippedFrames;
-    float currentFrame{0};
-    float speed;
-    bool isFlipped{false}, isPlaying{true};
-    sf::Sprite sprite;
 public:
     Animation() =default;
 
@@ -19,26 +13,24 @@ public:
 
     sf::Sprite & getSprite();
 
-    const sf::Sprite& getSprite() const {
-        return sprite;
-    }
+    const sf::Sprite& getSprite() const;
 
-    float width() const {
-        return frames[int(currentFrame)].width;
-    }
+    float width() const;
 
-    float height() const {
-        return frames[int(currentFrame)].height;
-    }
+    float height() const;
 
-    const sf::IntRect& getRect() const{
-        return frames[int(currentFrame)];
-    }
+    const sf::IntRect& getRect() const;
 
     void setPlayingStatus(bool isPlaying);
 
     void flip();
 
     void tick(float time);
+private:
+    std::vector<sf::IntRect> frames, flippedFrames;
+    float currentFrame{0};
+    float speed{0};
+    bool isFlipped{false}, isPlaying{true};
+    sf::Sprite sprite;
 };
 #endif //OOP_RGZ_ANIMATION_H

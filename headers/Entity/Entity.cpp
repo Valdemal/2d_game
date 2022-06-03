@@ -1,12 +1,8 @@
-//
-// Created by Vovan on 24.05.2022.
-//
-
 #include "Entity.h"
 
 void Entity::setPos(float x, float y) {
-    this->x = x;
-    this->y = y;
+    setX(x);
+    setY(y);
 }
 
 void Entity::setX(float x) {
@@ -43,8 +39,7 @@ void Entity::draw(sf::RenderWindow &window) {
 
 bool Entity::intersects(const Entity &other) const {
     // Починить
-//    return am.getRect().intersects(other.am.getRect());
-    return false;
+    return am.getRect().intersects(other.am.getRect());
 }
 
 bool Entity::isAlive() const {
@@ -74,3 +69,5 @@ void Entity::setDx(float acceleration) {
 void Entity::setDy(float acceleration) {
     this->dy = acceleration;
 }
+
+Entity::Entity(AnimationManager &am, float x, float y) : am(am), x(x), y(y) {}

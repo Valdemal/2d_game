@@ -37,3 +37,22 @@ void Animation::tick(float time) {
     else
         sprite.setTextureRect(frames[i]);
 }
+
+const sf::Sprite &Animation::getSprite() const {
+    return sprite;
+}
+
+float Animation::width() const {
+    return frames[int(currentFrame)].width;
+}
+
+float Animation::height() const {
+    return frames[int(currentFrame)].height;
+}
+
+const sf::IntRect &Animation::getRect() const {
+    if (isFlipped)
+        return flippedFrames.at(int(currentFrame));
+    else
+        return frames.at(int(currentFrame));
+}

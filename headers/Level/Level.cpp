@@ -25,34 +25,35 @@ void Level::parseMap() {
 }
 
 void Level::resolveCollisionsBetweenEntities() {
-
     for (auto it = entities.begin(); it != entities.end();) {
         if ((*it)->isAlive()) {
-
-            if ((*it)->type() == "Bullet") {
-                auto bullet = dynamic_cast<Bullet &>(**it);
-
-                for (auto &entity : entities)
-                    if (entity->type() == "Enemy" and bullet.intersects(*entity)) {
-                        bullet.damageTo(dynamic_cast<Enemy &>(*entity));
-                        bullet.setAlive(false);
-                        std::cout << "Bullet hit to!";
-                    }
-
-            } else if ((*it)->type() == "Enemy" and (*it)->intersects(*player)) {
-                auto enemy = dynamic_cast<Enemy*>(it->get());
-                std::cout << "Enemy should attack player" << std::endl;
-                // Тут логика атаки, которая пока не работает по странным причинам
-
-            } else if ((*it)->type() == "Modifier" and (*it)->intersects(*player)) {
-                std::cout << "Modify";
-                auto modifier = dynamic_cast<Modifier*>(it->get());
-                modifier->useOn(*player);
-            }
-
+            resolveCollisionsForEntity(**it);
             it++;
         } else
             it = entities.erase(it);
+    }
+}
+
+void Level::resolveCollisionsForEntity(Entity &entity) {
+    if (entity.type() == "Bullet") {
+        auto bullet = dynamic_cast<Bullet &>(entity);
+
+        for (auto &other : entities)
+            if (other->type() == "Enemy" and bullet.intersects(*other)) {
+                bullet.damageTo(dynamic_cast<Enemy &>(*other));
+                bullet.setAlive(false);
+                std::cout << "Bullet hit to!";
+            }
+
+    } else if (entity.type() == "Enemy" and entity.intersects(*player)) {
+        auto enemy = dynamic_cast<Enemy*>(&entity);
+//        std::cout << "Enemy should attack player" << std::endl;
+        // Тут логика атаки, которая пока не работает по странным причинам
+
+    } else if (entity.type() == "Modifier" and entity.intersects(*player)) {
+        std::cout << "Modify";
+        auto modifier = dynamic_cast<Modifier*>(&entity);
+        modifier->useOn(*player);
     }
 }
 

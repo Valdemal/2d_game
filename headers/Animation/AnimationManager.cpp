@@ -1,6 +1,6 @@
 #include "AnimationManager.h"
 
-void AnimationManager::create(const std::string &name, Animation animation) {
+void AnimationManager::add(const std::string &name, Animation animation) {
     animations[name] = std::move(animation);
     currentAnimationName = name;
 }
@@ -18,7 +18,8 @@ void AnimationManager::set(const std::string &name) {
 }
 
 void AnimationManager::flip() {
-    animations[currentAnimationName].flip();
+    for (auto &animation : animations)
+        animation.second.flip();
 }
 
 void AnimationManager::tick(float time) {
@@ -39,4 +40,8 @@ float AnimationManager::width() const {
 
 float AnimationManager::height() const {
     return animations.at(currentAnimationName).height();
+}
+
+const sf::IntRect &AnimationManager::getRect() const {
+    return animations.at(currentAnimationName).getRect();
 }

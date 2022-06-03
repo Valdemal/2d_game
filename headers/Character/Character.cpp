@@ -2,33 +2,29 @@
 #include "../Map/Map.h"
 #include "../Level/Level.h"
 
-void Character::moveLeft() {
-    if (xDirection == RIGHT)
+void Character::move(Character::direction_t direction) {
+    if (xDirection != direction)
         dirChanged = true;
 
-    xDirection = LEFT;
+    xDirection = direction;
 
     if (state == STAY)
         state = WALK;
 
-    setDx(-ACCELERATION);
+    setDx(direction == RIGHT ? X_ACCELERATION : -X_ACCELERATION);
+}
+
+void Character::moveLeft() {
+    move(LEFT);
 }
 
 void Character::moveRight() {
-    if (xDirection == LEFT)
-        dirChanged = true;
-
-    xDirection = RIGHT;
-
-    if (state == STAY)
-        state = WALK;
-
-    setDx(ACCELERATION);
+    move(RIGHT);
 }
 
 void Character::jump() {
     if (onGround() and (state == STAY or state == WALK)) {
-        setDy(-0.27);
+        setDy(JUMP_ACCELERATION);
         state = JUMP;
         setOnGround(false);
     }
@@ -66,7 +62,7 @@ void Character::update(float time) {
 
     resolveCollisions(map, true);
     if (not onGround()) {
-        increaseDy(0.0005f * time);
+        increaseDy(Y_ACCELERATION * time);
     }
     setY(getY() + getDy() * time);
     setOnGround(false);
@@ -78,14 +74,16 @@ void Character::update(float time) {
 
 
 void Character::resolveCollisions(const Map &map, bool isHorizontalDirection) {
-    for (size_t i = std::abs(getY() / float(settings::TILE_SIZE)); i < std::abs((getY() + height()) / float(settings::TILE_SIZE)); i++)
+    for (size_t i = std::abs(getY() / float(settings::TILE_SIZE));
+         i < std::abs((getY() + height()) / float(settings::TILE_SIZE)); i++)
         // Происходит телепорт при долгом беге в левую стену
-        for (size_t j = std::abs(getX() / float(settings::TILE_SIZE)); j < std::abs((getX() + width()) / float(settings::TILE_SIZE)); j++) {
+        for (size_t j = std::abs(getX() / float(settings::TILE_SIZE));
+             j < std::abs((getX() + width()) / float(settings::TILE_SIZE)); j++) {
 
             // Обработка столкновения с границей
             if (map[i][j] == mapObject::Border) {
                 if (isHorizontalDirection) {
-
+                    // Обработка горизонтальных столкновений
                     if (getDx() > 0) {
                         setX(float(j) * settings::TILE_SIZE - width());
 
@@ -93,7 +91,7 @@ void Character::resolveCollisions(const Map &map, bool isHorizontalDirection) {
                         setX(float(j) * settings::TILE_SIZE + settings::TILE_SIZE);
 
                 } else {
-
+                    // Обработка вертикальных столкновений
                     if (getDy() > 0) {
                         setY(float(i) * settings::TILE_SIZE - height());
                         setDy(0);
@@ -102,7 +100,6 @@ void Character::resolveCollisions(const Map &map, bool isHorizontalDirection) {
                         setY(float(i) * settings::TILE_SIZE + settings::TILE_SIZE);
                         setDy(0);
                     }
-
                 }
             }
         }
@@ -151,4 +148,5 @@ void Character::setOnGround(bool onGround) {
 bool Character::onGround() const {
     return isOnGround;
 }
+
 
