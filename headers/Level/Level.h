@@ -1,16 +1,18 @@
 #ifndef OOP_RGZ_LEVEL_H
 #define OOP_RGZ_LEVEL_H
 
+#include <list>
 #include "entityFactory.hpp"
+#include "../Bullet/Bullet.h"
 
 
 class Level {
 public:
-    Level(std::shared_ptr<Player> player, const Map& map);
+    Level(std::unique_ptr<Player> player, const Map& map);
 
-    static Level& getInstance();
+    static Level *getInstance();
 
-    Player& getPlayer();
+    const std::unique_ptr<Player> & getPlayer();
 
     const Map& getMap() const;
 
@@ -19,13 +21,12 @@ public:
     void draw(sf::RenderWindow &window);
 
     void update(float time);
-
 private:
     static Level* instance;
 
     Map map;
-    std::shared_ptr<Player> player;
-    std::vector<entityPtr> entities;
+    std::unique_ptr<Player> player;
+    std::list<entityPtr> entities;
 
     void parseMap();
     void resolveCollisionsBetweenEntities();

@@ -6,22 +6,48 @@
 
 namespace settings {
 
-    namespace game {
-        const std::string name = "My game";
-
-        namespace window {
-            const size_t WIDTH = 1000;
-            const size_t HEIGHT = 350;
-        }
-    }
+    static const char *const GAME_NAME = "My game";
 
     const size_t TILE_SIZE = 32;
 
-    const std::string PLAYER_TEXTURE_FILE = "../files/fang.png";
+    namespace window {
+        const size_t WIDTH = 1000;
+        const size_t HEIGHT = 350;
+    }
 
+    namespace player {
+        static const char *const TEXTURE_FILE = "../files/fang.png";
+
+        AnimationManager getStandardAM();
+
+        const AnimationManager STANDARD_AM = [](){
+            sf::Texture t;
+            t.loadFromFile(settings::player::TEXTURE_FILE);
+
+            AnimationManager am;
+            am.add("walk",
+                   Animation(t,
+                             sf::IntRect(0, 244, 40, 50),
+                             6, 0.005, 40));
+
+            am.add("jump", Animation(t, sf::IntRect(0, 528, 29, 30), 4, 0.0045, 40));
+            am.add("stay", Animation(t, sf::IntRect(0, 187, 42, 52), 3, 0.002, 40));
+            return am;
+        }();
+    }
+
+    namespace bullet {
+        static const char *const TEXTURE_FILE = "../files/Bullet.png";
+
+        AnimationManager getStandardAm();
+    }
+
+    namespace map {
+        static const char *const FILE = "../files/map.txt";
+    }
     const sf::Texture PLAYER_TEXTURE = [](){
         sf::Texture t;
-        t.loadFromFile(settings::PLAYER_TEXTURE_FILE);
+        t.loadFromFile(settings::player::TEXTURE_FILE);
         return t;
     }();
 

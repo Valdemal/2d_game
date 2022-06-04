@@ -1,7 +1,7 @@
 #include <memory>
 #include "../Map/Map.h"
-#include "../Modifier/HealthBooster.hpp"
-#include "../Enemy/Clone.hpp"
+#include "../Modifier/HealthBooster.h"
+#include "../Enemy/Clone.h"
 
 
 typedef std::shared_ptr<Entity> entityPtr;

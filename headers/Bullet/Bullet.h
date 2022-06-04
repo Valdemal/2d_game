@@ -1,26 +1,25 @@
 #ifndef OOP_RGZ_BULLET_H
 #define OOP_RGZ_BULLET_H
 
-#include "../Character/Character.h"
+#include <iostream>
+#include "../Enemy/Enemy.hpp"
 
 class Bullet : public Entity {
 public:
-    Bullet(float x, float y, size_t damage, bool isRightDirection);
+    Bullet(float x, float y, size_t damage, direction_t direction);
 
-    void damageTo(Character &character);
+    void damageTo(Enemy &enemy);
 
     void update(float time) override;
 
     std::string type() const final;
+protected:
+    void explode();
 
 private:
-    // У всех пуль одна и та же анимация
-    static AnimationManager createBulletAnimation();
-
     size_t damage;
 
-    const float ACCELERATION = 10;
-
+    const float ACCELERATION = 0.7;
 };
 
 

@@ -18,6 +18,8 @@ public:
 
     void setHp(size_t value);
 
+    void setMaxHp(size_t value);
+
     void damage(size_t damage);
 
     void heal(size_t value);
@@ -41,19 +43,11 @@ public:
     void update(float time) override;
 
 protected:
-    typedef enum {
-        LEFT, RIGHT
-    } direction_t;
-
-    direction_t xDirection{};
-
     enum {
         STAY, WALK, JUMP
     } state{};
 
     bool dirChanged{false};
-
-protected:
 
     virtual void move(direction_t direction);
 

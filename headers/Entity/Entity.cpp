@@ -1,5 +1,28 @@
 #include "Entity.h"
 
+Entity::Entity(const AnimationManager &am, float x, float y) : animationManager(am), x(x), y(y) {}
+
+
+Entity::direction_t Entity::getXDirection() const {
+    return xDirection;
+}
+
+void Entity::setXDirection(Entity::direction_t dir) {
+    xDirection = dir;
+}
+
+AnimationManager &Entity::getAnimationManager() {
+    return animationManager;
+}
+
+void Entity::setAnimationManager(const AnimationManager &am) {
+    animationManager = am;
+}
+
+void Entity::update(float time) {
+    animationManager.tick(time);
+}
+
 void Entity::setPos(float x, float y) {
     setX(x);
     setY(y);
@@ -26,15 +49,15 @@ float Entity::getY() const {
 }
 
 float Entity::width() const {
-    return am.width();
+    return animationManager.width();
 }
 
 float Entity::height() const {
-    return am.height();
+    return animationManager.height();
 }
 
 void Entity::draw(sf::RenderWindow &window) {
-    am.draw(window, getX(), getY());
+    animationManager.draw(window, getX(), getY());
 }
 
 bool Entity::intersects(const Entity &other) const {
@@ -71,8 +94,6 @@ void Entity::setDx(float acceleration) {
 void Entity::setDy(float acceleration) {
     this->dy = acceleration;
 }
-
-Entity::Entity(const AnimationManager &am, float x, float y) : am(am), x(x), y(y) {}
 
 bool Entity::checkIntersection(Entity::compareRectStruct a, Entity::compareRectStruct b) {
     return (

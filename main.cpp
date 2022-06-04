@@ -1,9 +1,10 @@
 #include "headers/Controller/Controller.h"
+#include "headers/Bullet/Bullet.h"
 
 int main() {
     sf::RenderWindow window(
-            sf::VideoMode(settings::game::window::WIDTH, settings::game::window::HEIGHT),
-            settings::game::name
+            sf::VideoMode(settings::window::WIDTH, settings::window::HEIGHT),
+            settings::GAME_NAME
     );
 
     Controller controller;
@@ -21,8 +22,8 @@ int main() {
                 controller.processEvent(event);
         }
 
-        controller.update(time);
         window.clear(sf::Color::Green);
+        controller.update(time);
         controller.draw(window);
         window.display();
     }

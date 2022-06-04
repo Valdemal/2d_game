@@ -7,18 +7,12 @@
 #include "../Animation/AnimationManager.h"
 
 class Entity {
-protected:
-    AnimationManager am;
-private:
-    float dx{0}, dy{0};
-    float x{}, y{};
-    bool alive{true};
 public:
     Entity() = default;
 
     explicit Entity(const AnimationManager &am, float x = 0, float y = 0);
 
-    virtual void update(float time) = 0;
+    virtual void update(float time);
 
     virtual std::string type() const = 0;
 
@@ -56,12 +50,30 @@ public:
 
     virtual void draw(sf::RenderWindow &window);
 
+    typedef enum {
+        LEFT, RIGHT
+    } direction_t;
+
+    direction_t getXDirection() const;
+
+    void setXDirection(direction_t dir);
+
+    AnimationManager& getAnimationManager();
+
+    void setAnimationManager(const AnimationManager &am);
+
+protected:
+    AnimationManager animationManager;
 private:
+    float dx{0}, dy{0};
+    float x{}, y{};
+    bool alive{true};
+    direction_t xDirection{};
+
     struct compareRectStruct {
         float x, y;
         float x1, y1;
     };
-
 
     static bool checkIntersection(compareRectStruct a, compareRectStruct b);
 };

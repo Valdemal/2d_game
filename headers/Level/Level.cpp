@@ -1,5 +1,6 @@
 #include "Level.h"
-#include "../Bullet/Bullet.h"
+
+#include <utility>
 
 Level *Level::instance = nullptr;
 
@@ -25,36 +26,38 @@ void Level::parseMap() {
 
 void Level::resolveCollisionsBetweenEntities() {
     for (auto it = entities.begin(); it != entities.end();) {
-        if ((*it)->isAlive()) {
-            resolveCollisionsForEntity(**it);
+        resolveCollisionsForEntity(**it);
+
+        if ((*it)->isAlive())
             it++;
-        } else
+        else
             it = entities.erase(it);
     }
 }
 
 void Level::resolveCollisionsForEntity(Entity &entity) {
     if (entity.type() == "Bullet") {
-        auto bullet = dynamic_cast<Bullet &>(entity);
+        auto bullet = dynamic_cast<Bullet *>(&entity);
 
         for (auto &other : entities)
-            if (other->type() == "Enemy" and bullet.intersects(*other)) {
-                bullet.damageTo(dynamic_cast<Enemy &>(*other));
-                bullet.setAlive(false);
-                std::cout << "Bullet hit to!";
-            }
+            if (other->type() == "Enemy" and bullet->intersects(*other))
+                bullet->damageTo(dynamic_cast<Enemy &>(*other));
 
     } else if (entity.type() == "Enemy" and entity.intersects(*player)) {
+
         auto enemy = dynamic_cast<Enemy *>(&entity);
         enemy->attack(*player);
+
     } else if (entity.type() == "Modifier" and entity.intersects(*player)) {
+
         auto modifier = dynamic_cast<Modifier *>(&entity);
         modifier->useOn(*player);
+
     }
 }
 
-Player &Level::getPlayer() {
-    return *player;
+const std::unique_ptr<Player>& Level::getPlayer() {
+    return player;
 }
 
 void Level::addEntity(const entityPtr &entity) {
@@ -70,16 +73,16 @@ void Level::draw(sf::RenderWindow &window) {
     }
 }
 
-Level::Level(std::shared_ptr<Player> player, const Map &map) : player(std::move(player)), map(map) {
+Level::Level(std::unique_ptr<Player> player, const Map &map) : player(std::move(player)), map(map) {
     if (instance == nullptr) {
-        parseMap();
         instance = this;
+        parseMap();
     } else
         throw std::runtime_error("Trying to redefine singleton!");
 }
 
-Level &Level::getInstance() {
-    return *instance;
+Level *Level::getInstance() {
+    return instance;
 }
 
 const Map &Level::getMap() const {

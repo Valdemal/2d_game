@@ -10,10 +10,6 @@ public:
 
     virtual void useOn(Player& player) = 0;
 
-    void update(float time) override{
-        am.tick(time);
-    }
-
     std::string type() const override {
         return "Modifier";
     }

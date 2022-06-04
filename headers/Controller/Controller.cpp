@@ -1,5 +1,33 @@
 #include "Controller.h"
 
+Controller::Controller() {
+    auto map = Map::readFromTextFile(settings::map::FILE);
+
+    level = std::make_unique<Level>(
+            std::make_unique<Player>(settings::PLAYER_AM,
+                                     100,
+                                     float(100),
+                                     float(settings::window::HEIGHT - 2 * settings::TILE_SIZE)),
+            map);
+
+    // Добавление всплывающих сообщений
+    Message pauseMessage("Pause", 45, float(settings::window::WIDTH) / 2, 50);
+    pauseMessage.setColor(sf::Color::Red);
+    ui.add("pause", pauseMessage);
+
+    Message gameOverMessage("Game over!!!", 45, float(settings::window::WIDTH) / 2, 50, false);
+    gameOverMessage.setColor(sf::Color::Red);
+    ui.add("game over", gameOverMessage);
+
+    showStartMessage();
+}
+
+void Controller::showStartMessage() {
+    TemporaryMessage tm("Start", 45, 2, float(settings::window::WIDTH) / 2, 50);
+    tm.setColor(sf::Color::Red);
+    ui.show(tm);
+}
+
 void Controller::processEvent(const sf::Event &event) {
     if (isRunning()) {
         if (event.type == sf::Event::KeyPressed) {
@@ -7,26 +35,23 @@ void Controller::processEvent(const sf::Event &event) {
                 pause();
                 ui.getMessage("pause").activate();
             } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
-                level->getPlayer().shoot();
+                level->getPlayer()->shoot();
             }
         } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-            level->getPlayer().moveRight();
+            level->getPlayer()->moveRight();
         } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-            level->getPlayer().moveLeft();
+            level->getPlayer()->moveLeft();
         } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-            level->getPlayer().jump();
+            level->getPlayer()->jump();
         } else {
             // Переделать
-            level->getPlayer().stop();
+            level->getPlayer()->stop();
         }
     } else {
         if (event.type == sf::Event::KeyPressed && sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
             start();
             ui.getMessage("pause").deactivate();
-
-            TemporaryMessage tm("Start", 45, 2, float(settings::game::window::WIDTH) / 2, 50);
-            tm.setColor(sf::Color::Red);
-            ui.show(tm);
+            showStartMessage();
         }
     }
 }
@@ -61,32 +86,9 @@ void Controller::update(float time) {
     if (isRunning()) {
         level->update(time);
 
-        if (!level->getPlayer().isAlive()) {
+        if (!level->getPlayer()->isAlive()) {
             finish();
             ui.getMessage("game over").activate();
         }
     }
-}
-
-Controller::Controller() {
-    auto map = Map::readFromTextFile("../files/map.txt");
-
-    auto player = std::make_shared<Player>(settings::PLAYER_AM, 100,
-                                           float(settings::game::window::WIDTH) / 2 - 60,
-                                           float(settings::game::window::HEIGHT) / 2);
-
-    level = std::make_unique<Level>(player, map);
-
-    // Добавление всплывающих сообщений
-    Message pauseMessage("Pause", 45, float(settings::game::window::WIDTH) / 2, 50);
-    pauseMessage.setColor(sf::Color::Red);
-    ui.add("pause", pauseMessage);
-
-    Message gameOverMessage ("Game over!!!", 45, float(settings::game::window::WIDTH) / 2, 50, false);
-    gameOverMessage.setColor(sf::Color::Red);
-    ui.add("game over", gameOverMessage);
-
-    TemporaryMessage tm("Start", 45, 2, float(settings::game::window::WIDTH) / 2, 50);
-    tm.setColor(sf::Color::Red);
-    ui.show(tm);
 }

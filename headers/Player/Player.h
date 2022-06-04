@@ -10,8 +10,10 @@ public:
     void shoot() const;
 
     std::string type() const override;
+    static AnimationManager createPlayerAnimation();
 
 private:
+
     const size_t BULLET_DAMAGE = 20;
 };
 

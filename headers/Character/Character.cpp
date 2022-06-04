@@ -3,15 +3,15 @@
 #include "../Level/Level.h"
 
 void Character::move(Character::direction_t direction) {
-    if (xDirection != direction)
+    if (getXDirection() != direction)
         dirChanged = true;
 
-    xDirection = direction;
+    setXDirection(direction);
 
     if (state == STAY)
         state = WALK;
 
-    setDx(direction == RIGHT ? X_ACCELERATION : -X_ACCELERATION);
+    setDx(getXDirection() == RIGHT ? X_ACCELERATION : -X_ACCELERATION);
 }
 
 void Character::moveLeft() {
@@ -38,18 +38,18 @@ void Character::stop() {
 void Character::setAnimationByState() {
     switch (state) {
         case STAY:
-            am.set("stay");
+            getAnimationManager().set("stay");
             break;
         case WALK:
-            am.set("walk");
+            getAnimationManager().set("walk");
             break;
         case JUMP:
-            am.set("jump");
+            getAnimationManager().set("jump");
             break;
     }
 
     if (dirChanged)
-        am.flip();
+        getAnimationManager().flip();
 
     dirChanged = false;
 }
@@ -58,7 +58,7 @@ void Character::update(float time) {
     setAnimationByState();
     setX(getX() + getDx() * time);
 
-    auto map = Level::getInstance().getMap();
+    auto& map = Level::getInstance()->getMap();
 
     resolveCollisions(map, true);
     if (not onGround()) {
@@ -69,7 +69,7 @@ void Character::update(float time) {
     resolveCollisions(map, false);
 
     setDx(0);
-    am.tick(time);
+    getAnimationManager().tick(time);
 }
 
 
@@ -107,7 +107,7 @@ void Character::resolveCollisions(const Map &map, bool isHorizontalDirection) {
 
 Character::Character(const AnimationManager &am, size_t maxHp, float x, float y) : Entity(am, x, y), maxHp(maxHp), hp(maxHp) {
     state = STAY;
-    xDirection = RIGHT;
+    setXDirection(RIGHT);
 }
 
 size_t Character::getHp() const {
@@ -115,7 +115,10 @@ size_t Character::getHp() const {
 }
 
 void Character::setHp(size_t value) {
-    this->hp = value;
+    if (value > maxHp)
+        hp = maxHp;
+    else
+        this->hp = value;
 }
 
 void Character::damage(size_t damage) {
@@ -151,6 +154,13 @@ bool Character::onGround() const {
 
 size_t Character::getMaxHp() const {
     return maxHp;
+}
+
+void Character::setMaxHp(size_t value) {
+    maxHp = value;
+
+    if (value < getHp())
+        setHp(value);
 }
 
 
