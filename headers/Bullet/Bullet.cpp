@@ -6,7 +6,7 @@ Bullet::Bullet(float x, float y, size_t damage, direction_t direction) : damage(
     setPos(x, y);
     setXDirection(direction);
 
-    setAnimationManager(settings::bullet::getStandardAm());
+    setAnimationManager(settings::bullet::STANDARD_AM);
     getAnimationManager().set("move");
 
     setDx(direction == RIGHT ? ACCELERATION : -ACCELERATION);

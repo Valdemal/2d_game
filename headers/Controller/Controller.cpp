@@ -4,7 +4,7 @@ Controller::Controller() {
     auto map = Map::readFromTextFile(settings::map::FILE);
 
     level = std::make_unique<Level>(
-            std::make_unique<Player>(settings::PLAYER_AM,
+            std::make_unique<Player>(settings::player::STANDARD_AM,
                                      100,
                                      float(100),
                                      float(settings::window::HEIGHT - 2 * settings::TILE_SIZE)),

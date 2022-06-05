@@ -16,7 +16,7 @@ set(SOURCES
         headers/Modifier/Modifier.hpp
         headers/Modifier/HealthBooster.h
         headers/Enemy/Enemy.hpp
-        headers/Bullet/Bullet.cpp headers/Bullet/Bullet.h headers/Controller/Controller.cpp headers/Controller/Controller.h headers/Level/Level.cpp headers/Level/Level.h headers/UI/UI.cpp headers/Modifier/HealthBooster.cpp headers/Enemy/Clone.cpp headers/Settings.cpp)
+        headers/Bullet/Bullet.cpp headers/Bullet/Bullet.h headers/Controller/Controller.cpp headers/Controller/Controller.h headers/Level/Level.cpp headers/Level/Level.h headers/UI/UI.cpp headers/Modifier/HealthBooster.cpp headers/Enemy/Clone.cpp)
 
 add_executable(OOP_RGZ main.cpp ${SOURCES})
 

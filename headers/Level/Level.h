@@ -10,6 +10,9 @@ class Level {
 public:
     Level(std::unique_ptr<Player> player, const Map& map);
 
+    Level()=delete;
+    Level(const Level &)=delete;
+
     static Level *getInstance();
 
     const std::unique_ptr<Player> & getPlayer();
@@ -30,7 +33,6 @@ private:
 
     void parseMap();
     void resolveCollisionsBetweenEntities();
-
     void resolveCollisionsForEntity(Entity &entity);
 };
 

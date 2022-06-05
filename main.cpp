@@ -22,7 +22,7 @@ int main() {
                 controller.processEvent(event);
         }
 
-        window.clear(sf::Color::Green);
+        window.clear(sf::Color::White);
         controller.update(time);
         controller.draw(window);
         window.display();

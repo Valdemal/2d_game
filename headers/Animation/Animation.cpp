@@ -1,5 +1,6 @@
 #include "Animation.h"
 
+// Нужно передвавать тектуру по значению и хранить
 Animation::Animation(const sf::Texture &t, sf::IntRect size, int count, float speed, int step)
         : speed(speed) {
     sprite.setTexture(t);
