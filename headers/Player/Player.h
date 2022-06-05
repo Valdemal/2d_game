@@ -9,7 +9,7 @@ public:
 
     void shoot() const;
 
-    std::string type() const override;
+    std::string type() const final;
 
 private:
     const size_t BULLET_DAMAGE = 20;

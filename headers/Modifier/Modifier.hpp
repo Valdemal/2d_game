@@ -10,7 +10,7 @@ public:
 
     virtual void useOn(Player& player) = 0;
 
-    std::string type() const override {
+    std::string type() const final {
         return "Modifier";
     }
 };
