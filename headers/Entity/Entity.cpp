@@ -3,11 +3,11 @@
 Entity::Entity(const AnimationManager &am, float x, float y) : animationManager(am), x(x), y(y) {}
 
 
-Entity::direction_t Entity::getXDirection() const {
+direction_t Entity::getXDirection() const {
     return xDirection;
 }
 
-void Entity::setXDirection(Entity::direction_t dir) {
+void Entity::setXDirection(direction_t dir) {
     xDirection = dir;
 }
 

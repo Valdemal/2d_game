@@ -1,10 +1,11 @@
 #ifndef OOP_RGZ_ENTITY_H
 #define OOP_RGZ_ENTITY_H
 
-
-#include <utility>
-
 #include "../Animation/AnimationManager.h"
+
+typedef enum {
+    LEFT, RIGHT
+} direction_t;
 
 class Entity {
 public:
@@ -12,33 +13,11 @@ public:
 
     explicit Entity(const AnimationManager &am, float x = 0, float y = 0);
 
-    virtual void update(float time);
-
     virtual std::string type() const = 0;
-
-    bool intersects(const Entity &other) const;
-
-    void setPos(float x, float y);
-
-    void setX(float x);
-
-    void setY(float y);
-
-    void setAlive(bool isAlive);
-
-    bool isAlive() const;
 
     float getDx() const;
 
     float getDy() const;
-
-    void increaseDx(float value);
-
-    void increaseDy(float value);
-
-    void setDx(float acceleration);
-
-    void setDy(float acceleration);
 
     float getX() const;
 
@@ -48,23 +27,40 @@ public:
 
     float height() const;
 
-    virtual void draw(sf::RenderWindow &window);
-
-    typedef enum {
-        LEFT, RIGHT
-    } direction_t;
+    AnimationManager& getAnimationManager();
 
     direction_t getXDirection() const;
 
-    void setXDirection(direction_t dir);
+    bool isAlive() const;
 
-    AnimationManager& getAnimationManager();
+    bool intersects(const Entity &other) const;
+
+    virtual void update(float time);
+
+    virtual void draw(sf::RenderWindow &window);
+
+    void setPos(float x, float y);
+
+    void setX(float x);
+
+    void setY(float y);
+
+    void setAlive(bool isAlive);
+
+    void increaseDx(float value);
+
+    void increaseDy(float value);
+
+    void setDx(float acceleration);
+
+    void setDy(float acceleration);
+
+    void setXDirection(direction_t dir);
 
     void setAnimationManager(const AnimationManager &am);
 
-protected:
-    AnimationManager animationManager;
 private:
+    AnimationManager animationManager;
     float dx{0}, dy{0};
     float x{}, y{};
     bool alive{true};

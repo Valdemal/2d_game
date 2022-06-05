@@ -1,8 +1,9 @@
 #include "Character.h"
 #include "../Map/Map.h"
 #include "../Level/Level.h"
+#include "../Settings.h"
 
-void Character::move(Character::direction_t direction) {
+void Character::move(direction_t direction) {
     if (getXDirection() != direction)
         dirChanged = true;
 

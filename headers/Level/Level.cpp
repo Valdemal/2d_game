@@ -1,8 +1,28 @@
 #include "Level.h"
-
-#include <utility>
+#include "../Bullet/Bullet.h"
+#include "../Settings.h"
 
 Level *Level::instance = nullptr;
+
+Level::Level(std::unique_ptr<Player> player) : player(std::move(player)) {
+}
+
+void Level::create(std::unique_ptr<Player> player, const Map& map) {
+    if (instance == nullptr) {
+        instance = new Level(std::move(player));
+        instance->parseMap(map);
+    } else
+        throw std::runtime_error("Trying to redefine singleton!");
+}
+
+Level *const Level::getInstance() {
+    return instance;
+}
+
+const Map &Level::getMap() const {
+    return map;
+}
+
 
 void Level::update(float time) {
     player->update(time);
@@ -13,11 +33,13 @@ void Level::update(float time) {
     resolveCollisionsBetweenEntities();
 }
 
-void Level::parseMap() {
-    for (size_t i = 0; i < map.rows(); ++i) {
-        for (size_t j = 0; j < map.cols(); ++j) {
-            if (Map::isEntity(map[i][j]))
-                addEntity(EntityFactory::create(map[i][j],
+void Level::parseMap(const Map &m) {
+    this->map = m;
+
+    for (size_t i = 0; i < m.rows(); ++i) {
+        for (size_t j = 0; j < m.cols(); ++j) {
+            if (Map::isEntity(m[i][j]))
+                addEntity(EntityFactory::create(m[i][j],
                                                 float(j - 1) * settings::TILE_SIZE,
                                                 float(i - 1) * settings::TILE_SIZE));
         }
@@ -71,20 +93,4 @@ void Level::draw(sf::RenderWindow &window) {
     for (auto &entity : entities) {
         entity->draw(window);
     }
-}
-
-Level::Level(std::unique_ptr<Player> player, const Map &map) : player(std::move(player)), map(map) {
-    if (instance == nullptr) {
-        instance = this;
-        parseMap();
-    } else
-        throw std::runtime_error("Trying to redefine singleton!");
-}
-
-Level *Level::getInstance() {
-    return instance;
-}
-
-const Map &Level::getMap() const {
-    return map;
 }

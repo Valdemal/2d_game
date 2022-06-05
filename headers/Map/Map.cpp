@@ -1,4 +1,7 @@
+#include <fstream>
 #include "Map.h"
+#include "../Settings.h"
+
 
 Map Map::readFromTextFile(const std::string &filename) {
     static std::map<char, mapObject> conformity = {
@@ -31,17 +34,9 @@ void Map::draw(sf::RenderWindow &window) const {
     sf::RectangleShape rectangle(sf::Vector2f(settings::TILE_SIZE, settings::TILE_SIZE));
     for (int i = 0; i < this->rows(); i++ ) {
         for (int j = 0; j < this->cols(); j++) {
-//            switch ((*this)[i][j]) {
-//                case mapObject::Empty:
-//                    continue;
-//
-//                case mapObject::Border:
-//                    rectangle.setFillColor(sf::Color::Black);
-//                    break;
-//            }
             if ((*this)[i][j] == mapObject::Border){
                 rectangle.setFillColor(sf::Color::Black);
-                rectangle.setPosition(j * settings::TILE_SIZE, i * settings::TILE_SIZE);
+                rectangle.setPosition(float(j) * settings::TILE_SIZE, float(i) * settings::TILE_SIZE);
                 window.draw(rectangle);
             }
         }
@@ -69,3 +64,5 @@ std::pair<size_t, size_t> Map::getSizeOfFile(const std::string &filename) {
 bool Map::isEntity(mapObject object) {
     return object == mapObject::HealthBooster or object == mapObject::Clone;
 }
+
+Map::Map(size_t m, size_t n) : matrix::Matrix<mapObject>(m, n) {}

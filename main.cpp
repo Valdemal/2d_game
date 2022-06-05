@@ -1,5 +1,5 @@
 #include "headers/Controller/Controller.h"
-#include "headers/Bullet/Bullet.h"
+#include "headers/Settings.h"
 
 int main() {
     sf::RenderWindow window(

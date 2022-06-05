@@ -26,8 +26,6 @@ private:
 
     bool isFinished() const;
 
-
-    std::unique_ptr<Level> level;
     UI ui;
     bool running{true};
     bool finished{false};

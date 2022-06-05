@@ -3,17 +3,16 @@
 
 #include <list>
 #include "entityFactory.hpp"
-#include "../Bullet/Bullet.h"
-
 
 class Level {
 public:
-    Level(std::unique_ptr<Player> player, const Map& map);
+    static void create(std::unique_ptr<Player> player, const Map& map);
+
+    static Level *const getInstance();
 
     Level()=delete;
-    Level(const Level &)=delete;
 
-    static Level *getInstance();
+    Level(const Level &)=delete;
 
     const std::unique_ptr<Player> & getPlayer();
 
@@ -27,11 +26,12 @@ public:
 private:
     static Level* instance;
 
-    Map map;
+    Map map{};
     std::unique_ptr<Player> player;
     std::list<entityPtr> entities;
 
-    void parseMap();
+    explicit Level(std::unique_ptr<Player> player);
+    void parseMap(const Map &m);
     void resolveCollisionsBetweenEntities();
     void resolveCollisionsForEntity(Entity &entity);
 };

@@ -15,8 +15,8 @@ sf::Sprite &Animation::getSprite() {
     return sprite;
 }
 
-void Animation::setPlayingStatus(bool isPlaying) {
-    this->isPlaying = isPlaying;
+void Animation::setPlayingStatus(bool playing) {
+    this->isPlaying = playing;
 }
 
 void Animation::flip() {

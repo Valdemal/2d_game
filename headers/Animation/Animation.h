@@ -19,7 +19,7 @@ public:
 
     float height() const;
 
-    void setPlayingStatus(bool isPlaying);
+    void setPlayingStatus(bool playing);
 
     void flip();
 

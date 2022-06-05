@@ -1,9 +1,11 @@
 #include "Controller.h"
+#include "../Settings.h"
 
 Controller::Controller() {
     auto map = Map::readFromTextFile(settings::map::FILE);
 
-    level = std::make_unique<Level>(
+    // Создание одиночки
+    Level::create(
             std::make_unique<Player>(settings::player::STANDARD_AM,
                                      100,
                                      float(100),
@@ -29,6 +31,8 @@ void Controller::showStartMessage() {
 }
 
 void Controller::processEvent(const sf::Event &event) {
+    auto level = Level::getInstance();
+
     if (isRunning()) {
         if (event.type == sf::Event::KeyPressed) {
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
@@ -78,11 +82,13 @@ bool Controller::isFinished() const {
 }
 
 void Controller::draw(sf::RenderWindow &window) {
-    level->draw(window);
+    Level::getInstance()->draw(window);
     ui.draw(window);
 }
 
 void Controller::update(float time) {
+    auto level = Level::getInstance();
+
     if (isRunning()) {
         level->update(time);
 

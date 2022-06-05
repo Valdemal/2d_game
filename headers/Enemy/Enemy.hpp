@@ -9,7 +9,7 @@ public:
 
     Enemy(const AnimationManager &am, size_t maxHp, float x = 0, float y = 0) : Character(am, maxHp, x, y) {};
 
-    std::string type() const {
+    std::string type() const override {
         return "Enemy";
     }
 
